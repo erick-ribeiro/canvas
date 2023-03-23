@@ -1,14 +1,19 @@
+var display = document.querySelector("canvas");
+var pen = display.getContext('2d');
 
+// drawRect(0, 0, 'green');
+// drawRect(50, 0, 'green');
 
-// pen.fillStyle = 'yellow';
-// pen.beginPath();
-// pen.moveTo(300, 200);
-// pen.lineTo(200, 400);
-// pen.lineTo(400, 400);
-// pen.fill();
+var x = 0;
 
+while(x < 600) {
+    drawRect(x, 0, 'green');
+    x += 50;
+}
 
-// pen.fillStyle = 'blue';
-// pen.beginPath();
-// pen.arc(300, 200, 50, 0, 2 * 3.14);
-// pen.fill();
+function drawRect(x, y, color){
+    pen.fillStyle = color;
+    pen.fillRect( x, y, 50, 50);
+    pen.fillStroke = 'black'
+    pen.strokeRect(x, y, 50, 50);
+}
