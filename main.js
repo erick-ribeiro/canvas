@@ -3,7 +3,9 @@ var pen = display.getContext('2d');
 let colorChose = document.querySelector('input');
 let colorPen = ['green', 'red', 'blue'];
 let iColor = 0;
-let radius = 10
+let radius = 10;
+let xRandom;
+let yRandom;
 
 // drawRect(0, 0, 'green');
 // drawRect(50, 0, 'green');
@@ -11,11 +13,8 @@ display.onclick = draw;
 display.oncontextmenu = changeColor;
 
 
-drawTarget(300,200, radius + 80, 'red');
-drawTarget(300,200, radius + 60, 'white');
-drawTarget(300,200, radius + 40, 'red');
-drawTarget(300,200, radius + 20, 'white');
-drawTarget(300,200, radius, 'red');
+
+setInterval(reloadScreen, 1000);
 
 
 var x = 0;
@@ -31,17 +30,44 @@ function drawRect(x, y, color, width, height){
     pen.strokeRect(x, y, width, height);
 }
 
-function drawTarget(x, y, r, color){
+function drawCirculo(x, y, r, color){
     pen.fillStyle = color;
     pen.beginPath();
     pen.arc(x, y, r, 0, 2 * Math.PI);
     pen.fill();
 }
 
+function drawTarget(x, y){
+    drawCirculo(x,y, radius + 20, 'red');
+    drawCirculo(x,y, radius + 10, 'white');
+    drawCirculo(x,y, radius, 'red');
+}
+
+function randomTarget(max) {
+    return Math.floor(Math.random() * max);
+}
+
+function cleenScreen(){
+    pen.clearRect(0,0,600,400);
+}
+
+function reloadScreen(){
+    cleenScreen();
+    xRandom = randomTarget(600);
+    yRandom = randomTarget(400);
+    drawTarget(xRandom, yRandom);
+}
+
 function draw(event){
     var pageX = event.pageX - display.offsetLeft;
     var pageY = event.pageY - display.offsetTop;
     
+    if((pageX > xRandom - radius)
+    && (pageX < xRandom + radius)
+    && (pageY > yRandom - radius)
+    && (pageY < yRandom + radius)) {
+        alert('Acertou!');
+    }
 
     // pen.fillStyle = colorPen[iColor];
     pen.fillStyle = colorChose.value;
